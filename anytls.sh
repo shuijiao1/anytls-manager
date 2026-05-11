@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 
 VERSION="0.1.2"
-REPO_RAW="https://raw.githubusercontent.com/shuijiao1/anytls-manager/main"
+REPO_RAW="https://raw.githubusercontent.com/shuijiao1/AnyTLS-Manager/main"
 UPDATE_URL="$REPO_RAW/anytls.sh"
 VERSION_URL="$REPO_RAW/version.txt"
 BIN="/usr/local/bin/anytls-server"
@@ -60,7 +60,7 @@ menu() {
     say "${CYAN}============================================${NC}"
     say "          ${CYAN}AnyTLS-Go 管理脚本 v$VERSION${NC}"
     say "${CYAN}============================================${NC}"
-    say "${GREEN}仓库: github.com/shuijiao1/anytls-manager${NC}"
+    say "${GREEN}仓库: github.com/shuijiao1/AnyTLS-Manager${NC}"
     say "${GREEN}作者: shuijiao1${NC}"
     say "${CYAN}============================================${NC}"
     say "安装状态：$(install_status)"
