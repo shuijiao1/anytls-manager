@@ -1,9 +1,11 @@
-# anytls-manager
+# AnyTLS-Manager
 
-水饺自用 anytls-go 管理脚本。
+水饺自用 AnyTLS-Go 管理脚本。
+
+## 一键运行
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/shuijiao1/AnyTLS-Manager/main/anytls.sh)
+curl -L -s anytls.shuijiao.de > /root/anytls.sh && chmod +x /root/anytls.sh && ./anytls.sh
 ```
 
 仅支持 `amd64 / x86_64`，自动从 anytls-go 最新 Release 下载对应架构。
