@@ -9,7 +9,7 @@ BIN="/usr/local/bin/anytls-server"
 SERVICE_FILE="/etc/systemd/system/anytls.service"
 SERVICE_NAME="anytls"
 
-GREEN='\033[0;32m'; RED='\033[0;31m'; YELLOW='\033[1;33m'; BLUE='\033[0;34m'; CYAN='\033[0;36m'; NC='\033[0m'
+GREEN='\033[0;32m'; RED='\033[0;31m'; YELLOW='\033[0;35m'; BLUE='\033[0;34m'; CYAN='\033[0;36m'; NC='\033[0m'
 say(){ printf '%b\n' "$*"; }; ok(){ say "${GREEN}✓${NC} $*"; }; err(){ say "${RED}✖${NC} $*" >&2; }; info(){ say "${BLUE}▶${NC} $*"; }; warn(){ say "${YELLOW}⚠${NC} $*"; }
 have(){ command -v "$1" >/dev/null 2>&1; }
 need_root(){ [[ ${EUID:-$(id -u)} -eq 0 ]] || { err "请用 root 运行"; exit 1; }; }
@@ -50,7 +50,8 @@ modify_config(){ [[ -f "$SERVICE_FILE" ]] || { err "anytls 未安装"; return 1;
 uninstall_anytls(){ read -rp "确认卸载 anytls？[y/N]: " y; [[ "$y" =~ ^[Yy]$ ]] || return 0; systemctl disable --now "$SERVICE_NAME" 2>/dev/null || true; rm -f "$SERVICE_FILE" "$BIN"; systemctl daemon-reload; ok "已卸载 anytls"; }
 service_ctl(){ case "$1" in start|stop|restart) systemctl "$1" "$SERVICE_NAME" && ok "服务已$1";; status) systemctl --no-pager --full status "$SERVICE_NAME" || true;; esac; }
 check_update(){ local r tmp; r=$(curl -fsSL "$VERSION_URL" 2>/dev/null | head -n1 | tr -cd '0-9.' || true); [[ -n "$r" && "$r" != "$VERSION" ]] || { ok "脚本已是最新 v$VERSION"; return; }; warn "发现新版脚本 v$r"; read -rp "更新？[y/N]: " y; [[ "$y" =~ ^[Yy]$ ]] || return; tmp=$(mktemp); curl -fsSL "$UPDATE_URL" -o "$tmp"; bash -n "$tmp"; install -m 0755 "$tmp" "$0"; rm -f "$tmp"; ok "脚本已更新"; exit 0; }
-status_line(){ [[ -x "$BIN" ]] && printf 已安装 || printf 未安装; printf ' / '; systemctl is-active --quiet "$SERVICE_NAME" 2>/dev/null && printf 运行中 || printf 未运行; }
+install_status(){ [[ -x "$BIN" ]] && printf "${GREEN}已安装${NC}" || printf "${RED}未安装${NC}"; }
+run_status(){ systemctl is-active --quiet "$SERVICE_NAME" 2>/dev/null && printf "${GREEN}运行中${NC}" || printf "${RED}未运行${NC}"; }
 menu() {
   need_root
   ensure_deps
@@ -62,21 +63,22 @@ menu() {
     say "${GREEN}仓库: github.com/shuijiao1/anytls-manager${NC}"
     say "${GREEN}作者: shuijiao1${NC}"
     say "${CYAN}============================================${NC}"
-    say "${YELLOW}服务状态：$(status_line)${NC}"
+    say "安装状态：$(install_status)"
+    say "运行状态：$(run_status)"
     say ""
-    say "${YELLOW}=== 基础功能 ===${NC}"
+    say "${BLUE}=== 基础功能 ===${NC}"
     say "${GREEN}1.${NC} 安装/更新 anytls"
     say "${GREEN}2.${NC} 卸载 anytls"
     say "${GREEN}3.${NC} 修改配置"
     say "${GREEN}4.${NC} 查看配置"
     say "${GREEN}5.${NC} 重启服务"
     say ""
-    say "${YELLOW}=== 服务管理 ===${NC}"
+    say "${BLUE}=== 服务管理 ===${NC}"
     say "${GREEN}6.${NC} 启动服务"
     say "${GREEN}7.${NC} 停止服务"
     say "${GREEN}8.${NC} 查看服务状态"
     say ""
-    say "${YELLOW}=== 系统功能 ===${NC}"
+    say "${BLUE}=== 系统功能 ===${NC}"
     say "${GREEN}9.${NC} 检查脚本更新"
     say "${GREEN}0.${NC} 退出脚本"
     say "${CYAN}============================================${NC}"
