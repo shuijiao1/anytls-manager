@@ -1,7 +1,7 @@
 # AnyTLS-Manager
 
 ![Shell](https://img.shields.io/badge/Shell-Bash-4EAA25?style=flat-square&logo=gnu-bash&logoColor=white)
-![Version](https://img.shields.io/badge/version-v0.1.2-blue?style=flat-square)
+![Version](https://img.shields.io/badge/version-v0.1.3-blue?style=flat-square)
 
 **中文** | [English](README.en.md)
 
@@ -36,7 +36,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/shuijiao1/AnyTLS-Manager/main/
 
 ## ⚙️ 版本与发布
 
-- 当前版本：`v0.1.2`
+- 当前版本：`v0.1.3`
 - 更新记录见 [`CHANGELOG.md`](CHANGELOG.md)
 - GitHub Release 会根据 `CHANGELOG.md` 自动生成说明
 - 维护者发布新版本可使用：
