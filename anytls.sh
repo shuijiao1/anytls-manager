@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-VERSION="0.1.0"
+VERSION="0.1.1"
 REPO_RAW="https://raw.githubusercontent.com/shuijiao1/AnyTLS-Manager/main"
 UPDATE_URL="$REPO_RAW/anytls.sh"
 VERSION_URL="$REPO_RAW/version.txt"
